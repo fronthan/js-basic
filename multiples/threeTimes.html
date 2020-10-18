@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3의배수</title>
+    <style>
+        .main_container {max-width:1250px; margin: 0 auto;}
+        h1 {color:#4d4d4d}
+        p {color:#ccc}
+        .result {display: flex; flex-wrap:wrap; list-style:none;}
+        .result li {padding: 15px 0; width:50px; text-align: center;}
+    </style>
+</head>
+<body>
+    <div class="main_container">
+        <h1>1~500 : 3의배수 중에서 4의 배수인 것을 삭제한 값 출력</h1>
+        <p>20.10.11</p>
+        <ul class="result">
+         
+        </ul>
+
+    </div>
+
+<script>
+    const result = document.querySelector('.result');   
+    var printNbrs = calThird();
+    
+    htmlInit();
+
+    function htmlInit() {
+        for (i = 0; i<=printNbrs.length-1; i++) {
+            const li_item = document.createElement('li');
+            li_item.textContent = printNbrs[i];
+            result.appendChild(li_item);
+        }
+    }   
+
+  
+    function calThird() {//3의 배수 구하기
+        let third = [];
+
+        for (i=1; i<=500; i++) {
+            if (i % 3 == 0) {
+                third.push(i);
+            }
+        }
+
+        let forth = []; //4의 배수인 것 삭제하기
+        for (j=0; j<=third.length-1; j++) {
+            if ( third[j] % 4 !== 0) {
+                forth.push(third[j]);
+            }
+        }
+        
+        return forth;
+    }
+</script>
+</body>
+</html>
