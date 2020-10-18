@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>구구단</title>
+    <style>
+ .main_container {max-width:1250px; margin: 0 auto 20px;}
+        h1 {color:#4d4d4d}
+        p {color:#ccc}
+        .multiplication_wrap {display: flex; flex-wrap:wrap;}
+        ul { list-style:none; margin: 0;  padding: 0; border-bottom: 1px solid #ddd;}
+        ul:nth-child(2), ul:nth-child(4), ul:nth-child(6), ul:nth-child(7), ul:nth-child(9), ul:nth-child(11), ul:nth-child(14), ul:nth-child(16), ul:nth-child(18) {background: #f9f9f9;}
+
+        ul li {width:200px;   padding: 15px 0 ; margin: 0; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="main_container">
+        <h1>구구단</h1>
+        <p>20.10.11</p>
+        <div class="multiplication_wrap">
+    
+    
+    
+        </div>
+
+    </div>
+
+    <script>
+
+const wrap = document.querySelector('.multiplication_wrap');
+
+function init() {
+    var abc = 3;
+    while ( abc <= 20) {
+        multiplication(abc);
+
+        abc++;
+    }
+}
+
+init();
+
+function multiplication(nn) {
+    const ul_once = document.createElement('ul');
+    wrap.appendChild(ul_once);
+    ul_once.classList.add('table'+nn);
+    
+    const table = document.querySelector('.table'+nn);
+    
+
+    for (i=1; i<=20; i++) {
+        const li_once = document.createElement('li');
+        li_once.textContent = nn +' x ' + i + ' = ' + nn*i;
+
+        table.appendChild(li_once);
+    }
+}
+
+    </script>
+    
+</body>
+</html>
