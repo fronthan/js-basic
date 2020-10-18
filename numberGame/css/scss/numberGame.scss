@@ -1,0 +1,67 @@
+@charset "utf-8";
+
+.main_container {max-width:1250px; margin: 0 auto;}
+.tit_game { color:#4d4d4d; font-size: 40px; }
+.tit_date { color: #ccc}
+
+.btn_start {
+    display: block;
+    width: 100px;
+    height: 32px;
+    line-height: 32px;
+    margin: 40px 0 40px auto;
+    background: #fff;
+    border: 1px solid blueviolet;
+    color:blueviolet;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover { background: #fefefe; }
+}
+
+.game_box {display: none;
+
+    .guess_go {
+        color:pink; text-decoration: underline;
+        cursor: pointer;
+
+        &:hover {color:skyblue}
+    }
+}
+
+.inp_guessnbr {
+    width:300px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+    outline:0;
+    border: 0;
+    border-bottom: 1px solid #ddd;
+    appearance: none;
+}
+
+.nowcount {
+    display: none;
+
+    &.on { display: block; font-size: 20px; }
+
+    .txt {color:#4d4d4d}
+}
+
+.guess_nbr_box {
+    display: none;
+
+    &.on {display: block}
+
+    .nbr_tit {display: block; color:#4d4d4d}
+
+    .guess_nbr {
+        list-style: none;
+
+        li {font-size:16px; margin-bottom: 5px;
+            &:last-child {margin-bottom: 0;}
+        }
+        .high {color:mediumvioletred}
+        .low {color:blue}
+    }    
+}

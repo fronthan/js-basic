@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>숫자 게임</title>
+    <link rel="stylesheet" href="css/numberGame.css">
+</head>
+<body>
+    <div class="main_container">
+        <h1 class="tit_game">숫자 게임, Number GAME</h1>
+        <p class="tit_date"> 2020.10.11</p>
+        <span class="btn_start js-startgame">게임 시작!</span>
+        
+        <div class="game_box js-game_on">
+            <input type="number" class="inp_guessnbr" value="" placeholder="1부터 100 사이의 숫자를 입력하세요" >
+            <span class="guess_go">추측하기</span>
+            
+            <P class="nowcount">현재 스코어 : <b class="txt">0</b></P>
+            
+            <div class="guess_nbr_box">
+                <b class="nbr_tit">추측한 숫자들</b>
+                <ol class="guess_nbr"></ol>
+            </div>
+        </div> 
+    </div>
+     
+    <script src="numberGame.js"></script>
+</body>
+</html>
