@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>간단한 달력</title>
+    <style>
+         .main_container {max-width:1250px; margin: 0 auto;}
+        h1 {color:#4d4d4d}
+        p {color:#ccc}
+        .month_select { height:28px; line-height: 28px;}
+        .view_calendar {display: flex; flex-wrap:wrap; list-style:none;}
+        .view_calendar li {padding: 30px 0; width:170px; text-align: center; background: #f7f7f7; border: 1px solid #fff;}
+    </style>
+</head>
+<body>
+    <div class="main_cointainer">
+        <h1>간단한 달력 만들기 (윤달 무시)</h1>
+        <p>2010.10.25</p>
+        
+        <div class="wrap_content">
+            <select name="month" id="month" class="month_select">
+                <option>월을 선택하세요</option>
+                <option value="1">1월</option>
+                <option value="2">2월</option>
+                <option value="3">3월</option>
+                <option value="4">4월</option>
+                <option value="5">5월</option>
+                <option value="6">6월</option>
+                <option value="7">7월</option>
+                <option value="8">8월</option>
+                <option value="9">9월</option>
+                <option value="10">10월</option>
+                <option value="11">11월</option>
+                <option value="12">12월</option>
+            </select>
+
+            <h2></h2>
+            <ul class="view_calendar">
+
+            </ul>
+        </div>
+    </div>    
+    <script>
+        const sel = document.querySelector('.month_select');
+        sel.addEventListener('change', selectDays);
+
+        function selectDays (ev) {
+            const selected = this.value;
+            let result_num;
+
+            if (selected == '1' || selected == '3' || selected == '5' || selected == '7' || selected =='8' || selected == '10' || selected == '12') {
+                result_num = 31;
+            } else if (selected == '4' || selected == '6' || selected == '9' || selected == '11') {
+                result_num = 30;
+            } else {
+                result_num = 28;
+            }
+
+            createCalendar(result_num, selected);
+        }
+
+
+        const result_box = document.querySelector('.view_calendar');
+        const tit_month = document.querySelector('h2');
+
+        function createCalendar(n, tit) {
+            result_box.innerHTML = '';
+            tit_month.textContent = tit + '월 달력';
+
+            for ( i = 1; i <= n; i++) {
+                const li_item = document.createElement('li');
+                result_box.appendChild(li_item);
+                li_item.textContent = i;
+            }
+        }
+    </script>
+</body>
+</html>
