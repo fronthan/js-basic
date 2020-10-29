@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>손님 목록</title>
+
+    <style>
+    .main_container {max-width:1250px; margin: 0 auto;}
+    h1 {color:#4d4d4d}
+    p {color:#ccc}
+
+    .admit_list, .refuse_list {font-size: 20px;}
+    </style>
+
+</head>
+<body>
+    <div class="main_container">
+        <h1>허가된 손님 목록 (Phil, Lola는 입장 금지)</h1>
+        <p>20.10.29</p>
+
+        <div class="admit_list"></div>
+        <div class="refuse_list"></div>
+    </div>    
+<script>
+
+    const people = ['Chris', 'Anne', 'Colin', 'Terri', 'Phil', 'Lola', 'Sam', 'Kay', 'Bruce'];
+
+    const refuse = document.querySelector('.refuse_list');
+    const admit = document.querySelector('.admit_list');
+
+    refuse.textContent = '입장 불가 : ';
+    admit.textContent = '어서오세요 : ';
+
+    let i = 0;
+
+    do {
+        if ( people[i] == 'Phil' || people[i] == 'Lola' ) {
+            refuse.textContent += people[i] +', ';
+        } else {
+            admit.textContent += people[i]+', ';
+        }   
+
+        i++;
+    } while ( i <= people.length-1 );
+
+    const refuse_result = refuse.textContent.slice(0, refuse.textContent.length-2);
+    refuse.textContent = refuse_result+'.';
+
+    const admit_result = admit.textContent.slice(0, admit.textContent.length-2);
+    admit.textContent = admit_result+'.';
+</script>
+</body>
+</html>
