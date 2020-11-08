@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Functions: Task 1</title>
+    <style>
+     .main_container {max-width:1250px; margin: 0 auto;}
+        h1 {color:#4d4d4d}
+        p {color:#ccc}
+        .result {display: flex; flex-wrap:wrap; list-style:none;}
+        .result li {padding: 15px 0; width:50px; text-align: center;}
+    </style>
+  </head>
+
+  <body>
+    <div class="main_container">
+        <h1>무작위 이름 출력 : 선언된 배열의 이름 중 무작위</h1>
+        <p>20.11.</p>       
+
+        <section class="result">
+    
+        </section>
+    </div>
+
+    <script>
+        let names = ['Chris', 'Li Kang', 'Anne', 'Francesca', 'Mustafa', 'Tina', 'Bert', 'Jada', '한','민','정'];
+        let para = document.createElement('div');
+
+
+        // Add your code here
+        let pre_nbr = 0;
+        function chooseName() {
+            const rd_nbr = Math.floor(Math.random()*names.length-1);
+            
+            if (pre_nbr !== rd_nbr) {             
+                pre_nbr = rd_nbr;
+                return rd_nbr;
+            }
+        }
+
+        let random_number = chooseName();
+
+        
+        if ( random_number !== null ) {
+            para.textContent = names[random_number];
+
+            // Don't edit the code below here!
+            const section = document.querySelector('.result');
+            section.appendChild(para);
+        } else {
+            chooseName();
+        }
+    </script>
+ </body>
+</html>
