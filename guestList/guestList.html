@@ -23,7 +23,7 @@
         <div class="refuse_list"></div>
     </div>    
 <script>
-
+function init() {
     const people = ['Chris', 'Anne', 'Colin', 'Terri', 'Phil', 'Lola', 'Sam', 'Kay', 'Bruce'];
 
     const refuse = document.querySelector('.refuse_list');
@@ -49,6 +49,9 @@
 
     const admit_result = admit.textContent.slice(0, admit.textContent.length-2);
     admit.textContent = admit_result+'.';
+}
+
+init();
 </script>
 </body>
 </html>
