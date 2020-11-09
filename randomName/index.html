@@ -25,31 +25,50 @@
     <script>
         let names = ['Chris', 'Li Kang', 'Anne', 'Francesca', 'Mustafa', 'Tina', 'Bert', 'Jada', '한','민','정'];
         let para = document.createElement('div');
-
+        let set_nbr = 0;
 
         // Add your code here
-        let pre_nbr = 0;
-        function chooseName() {
-            const rd_nbr = Math.floor(Math.random()*names.length-1);
-            
-            if (pre_nbr !== rd_nbr) {             
-                pre_nbr = rd_nbr;
-                return rd_nbr;
+        init();      
+    
+        function init() {
+            let pre_nbr = window.localStorage.getItem('last_number');
+            let random_number = chooseName();
+
+            if ( pre_nbr ) {//로컬에 저장된 값이 있으면
+                compareNbr(pre_nbr, random_number);
+            } else { //그날 처음 들어왔을 때는 로컬스토리지 저장값 없음
+                //쿠키셋팅 추가하기 
+                setStorage(random_number);
             }
         }
 
-        let random_number = chooseName();
-
-        
-        if ( random_number !== null ) {
-            para.textContent = names[random_number];
-
-            // Don't edit the code below here!
-            const section = document.querySelector('.result');
-            section.appendChild(para);
-        } else {
-            chooseName();
+        function chooseName() {// 랜덤 숫자 추출 
+            return Math.floor(Math.random()*names.length);       
         }
+
+        function compareNbr(pre, now) {//로컬 스토리지와 값 비교
+            let i, compare_again;
+
+            if (pre == now) {
+                compare_again = chooseName();
+                i = pre;
+
+                while ( i == compare_again ) {
+                   compare_again = chooseName();
+                }
+            }
+
+            setStorage(compare_again);
+        }
+        
+        function setStorage(num) {
+            para.textContent = names[num];
+            window.localStorage.setItem('last_number', num);
+        }
+
+        // Don't edit the code below here!
+        const section = document.querySelector('.result');
+        section.appendChild(para);
     </script>
  </body>
 </html>
