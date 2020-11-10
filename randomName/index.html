@@ -25,20 +25,25 @@
     <script>
         let names = ['Chris', 'Li Kang', 'Anne', 'Francesca', 'Mustafa', 'Tina', 'Bert', 'Jada', '한','민','정'];
         let para = document.createElement('div');
-        let set_nbr = 0;
-
+        
         // Add your code here
+        let set_nbr = 0;
         init();      
     
         function init() {
-            let pre_nbr = window.localStorage.getItem('last_number');
             let random_number = chooseName();
-
-            if ( pre_nbr ) {//로컬에 저장된 값이 있으면
-                compareNbr(pre_nbr, random_number);
-            } else { //그날 처음 들어왔을 때는 로컬스토리지 저장값 없음
-                //쿠키셋팅 추가하기 
+            
+            const cookieCheck = getCookie("todayCookie");
+           
+            if (cookieCheck == null) {//당일 처음 들어오면
+                setCookie("todayCookie", "justtodaycookie", 1);
                 setStorage(random_number);
+            } else {
+               // localStorage.getItem('lastNumber')
+                let pre_nbr = localStorage.getItem("lastNumber");
+              //  console.log(pre_nbr);
+                //alert('로컬스토리지 값 = '+pre_nbr);
+                compareNbr(pre_nbr, random_number);
             }
         }
 
@@ -48,6 +53,7 @@
 
         function compareNbr(pre, now) {//로컬 스토리지와 값 비교
             let i, compare_again;
+//console.log(pre, now);
 
             if (pre == now) {
                 compare_again = chooseName();
@@ -58,15 +64,30 @@
                 }
             }
 
+         //   console.log(i, compare_again);
+            
+
             setStorage(compare_again);
         }
         
         function setStorage(num) {
             para.textContent = names[num];
-            window.localStorage.setItem('last_number', num);
+            localStorage.lastNumber = num;
         }
 
-        // Don't edit the code below here!
+        //쿠키 셋팅 (당일 한정)
+        function setCookie(name, value, exp) {
+            let date = new Date();
+            date.setTime(date.getTime() + exp*24*60*60*1000);
+            document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+        }
+
+        //쿠키확인
+        function getCookie(today) {
+            var value = document.cookie.match('(^|;) ?' + today + '=([^;]*)(;|$)');          
+            return value ? value[2] : null;
+        }
+
         const section = document.querySelector('.result');
         section.appendChild(para);
     </script>
