@@ -141,10 +141,6 @@
             ++item_idx;
             
 
-
-
-            
-
                         
         }).on('click', '.js-nextpost', function (){
             $layer_box.removeClass('on');
@@ -153,14 +149,12 @@
 
         });
 
-        function setIndexArray(idx) {
-            //alert(idx);
-            const title = <?=$post_tit['?>idx<?=']?>;
+        function setIndexArray(idx) {           
+           <? $index= ?> idx;
            
-            // const li_title = document.querySelector('.daily_detail_box .li_tit');
-            // li_title.textContent = ;
-  
-
+           $('.daily_detail_box .li_tit').text('<?= $post_tit[$index] ?>');
+           
+            ///막혔다....
 
         }
 
