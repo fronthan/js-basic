@@ -14,17 +14,22 @@
         <h3 class="page_tit">능이의 일상</h3>
         <div class="neung_daily_wrap">
             <ol class="list">
+            
             <?php
-            for ($i=0, $iMax = count($post_tit); $i<$iMax; $i++){
-                echo "<li><span class=\"main_img\">"
-                ."<img src=\"img/daily/$post_img[$i].jpg\" alt=\"\"/></span>"
-                ."<div class=\"cont_area\">"
-                ."<div class=\"li_tit\">$post_tit[$i]</div>"
-                ."<div class=\"li_hash\">$post_hash[$i]</div>"
-                ."<div class=\"cont_tail\">"
-                ."<span class=\"btn_detail js-postdetail\">MORE</span>"
-                ."<time datatime=\"$post_date[$i]\" class=\"date\"><i class=\"icon_clock\"><span class=\"blind\">시계 아이콘</span></i>$post_date[$i]</time>"
-                ."</div></div></li>";
+            for ($i=0; $i<count($post_tit); $i++){
+             ?>
+            <li>
+                <span class="main_img"><img src="img/daily/<?=$post_img[$i]?>.jpg" alt=""></span>
+                <div class="cont_area">
+                    <div class="li_tit"><?=$post_tit[$i]?></div>
+                    <div class="li_hash"><?=$post_hash[$i]?></div>
+                    <div class="cont_tail">
+                        <span class="btn_detail js-postdetail">MORE</span>
+                        <time datatime="20.01.22" class="date"><i class="icon_clock"><span class="blind">시계 아이콘</span></i><?=$post_date[$i]?></time>
+                    </div>
+                </div>
+            </li>
+            <?php
             }
             ?>
             </ol>
