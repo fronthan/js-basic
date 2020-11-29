@@ -1,22 +1,8 @@
 <?php
     include_once('head.php');
     include_once('header.php');
+    include_once('daily_arrays.php'); 
 
-    $post_tit = ['1월의 생일파티', '조개가득', '소래회어시장', '어울더울','매드포갈릭','아이사구아','타르타르','카페 봄'];
-    $post_hash = ['#베라와 함께','#이사 #연초 #보너스','#방어회 #연말','#꽃등심 #A+등급','#마늘맛 #사당', '#테라스카페 #자연전망 #고양시','#홍대 타르트 맛집','#갤러리카페 #과천'];
-    $post_img = [
-        ['img_200122', 'img_200122_2', 'img_200105'],
-        ['img_200102_1', 'img_200102_1', 'img_200102_2'],
-        ['img_191206_1', 'img_191206_2','img_191206_3'],
-        ['img_191122_1','img_191122_2','img_191122_3','img_191122_4'],
-        ['img_191017_3','img_191017_1','img_191017_2'],
-        ['img_190718_3','img_190718','img_190718_2','img_190718_4'],
-        ['img_190712_1', 'img_190712_2'],
-        ['img_190702_2','img_190702_1','img_190702_3','img_190702_4']   
-    
-    ];
-
-    $post_date = ['20.01.22','20.01.02','19.12.06','19.11.22','19.10.17','19.07.18','19.07.12','19.07.02'];
 ?>
 <link rel="stylesheet" href="css/slick.css">
 <div class="ne_daily">
@@ -62,7 +48,7 @@
         </div>
         <div class="daily_detail_box">
             <div class="cont_head">
-                <time datatime="2020-01-22" class="date"><i class="icon_clock"><span class="blind">시계 아이콘</span></i>20.01.22</time>
+                <time datatime="2020-01-22" class="date"><i class="icon_clock"><span class="blind">시계 아이콘</span></i><span class="txt"></span></time>
                 <div class="li_tit">1월의 생일파티</div>
             </div>
             <div class="cont_body">
@@ -80,10 +66,32 @@
 </div>
 <script src="js/slick.min.js"></script>
 <script>    
-    $(document).ready(function(){
-        const $mask = $('.mask');
-        const $layer_box = $('.layer_box');
-        let item_idx = 0;
+const $mask = $('.mask');
+const $layer_box = $('.layer_box');
+
+let item_idx = 0;
+
+function getData(abc) {
+    $.ajax({
+        type : "post",
+        url : "./daily_data.php", 
+        data :  {
+            "idx" : abc        
+        },     
+        dataType:"json",
+        success : function(data) {
+           const date = data[0];
+           const title = data[1];
+           const hash = data[2];
+           let imgs = data[3];
+
+           setLayer(date, title, hash, imgs);           
+        }
+    });
+}
+
+      
+       
         
         /* --------------------
         * Slick.js 셋팅
@@ -92,6 +100,19 @@
         let thumb_box = $('.js-slick_thumb .img_area');
         const $js_slick = $('.js-slick');
         
+        function setLayer(date, title, hash, imgs) {//클릭한 레이어의 인덱스에 해당하는 내용 입력
+            $layer_box.find('.li_tit').text(title);
+            //$layer_box.find('.post_box').text()
+            $layer_box.find('.date .txt').text(date);
+            $layer_box.find('.date').attr('datatime', date);
+            $js_slick.find('.img_area').each(function(index){
+                $(this).find('img').attr('src', "img/daily/"+imgs[index]+".jpg");
+            });
+            thumb_box.each(function(index){
+                $(this).find('img').attr('src', "img/daily/"+imgs[index]+".jpg");
+            });
+        }
+
     
         function jsSlickInit() {//slick 초기화        
             $js_slick.slick({
@@ -103,6 +124,7 @@
             });
             $layer_box.addClass('on');
         }
+
         function jsSlickDestroy() {//slick 삭제
             $layer_box.removeClass('on');
             $js_slick.slick('destroy');
@@ -126,11 +148,11 @@
          * slick이외 일반 클릭 이벤트 모음 
          *---------------------- */
         $(document).on('click', '.js-postdetail', function(){//레이어로 자세히 보기 클릭
-            item_idx = $(this).closest('.list_item').index();
+            const this_idx = $(this).closest('.list_item').index();
 
             $mask.addClass('on');
-
-            setIndexArray(item_idx);
+            getData(this_idx);
+            
             jsSlickInit();
         }).on('click', '.js-closelayer', function(){//레이어 닫기
             $mask.removeClass('on');         
@@ -138,7 +160,7 @@
         }).on('click', '.js-prevpost', function (){
             jsSlickDestroy();
 
-            ++item_idx;
+          //  ++item_idx;
             
 
                         
@@ -148,18 +170,6 @@
             
 
         });
-
-        function setIndexArray(idx) {           
-           <? $index= ?> idx;
-           
-           $('.daily_detail_box .li_tit').text('<?= $post_tit[$index] ?>');
-           
-            ///막혔다....
-
-        }
-
-        
-    });   
 </script>
 <?php
     include_once('footer.php');
