@@ -42,9 +42,7 @@
 <div class="layer_box">
     <div class="post_wrap">
         <div class="js-slick">
-            <div class="img_area"><img src="img/daily/.jpg" alt=""/></div>
-            <div class="img_area"><img src="img/daily/.jpg" alt=""/></div>
-            <div class="img_area"><img src="img/daily/.jpg" alt=""/></div>
+
         </div>
         <div class="daily_detail_box">
             <div class="cont_head">
@@ -52,12 +50,12 @@
                 <div class="li_tit">1월의 생일파티</div>
             </div>
             <div class="cont_body">
-                <div class="post_box">가나다라</div>
+                <div class="post_box"></div>
             </div>
             <div class="js-slick_thumb">
-                <div class="img_area"><img src="img/daily/img_200122.jpg" alt=""/></div>
-                <div class="img_area"><img src="img/daily/img_200122_2.jpg" alt=""/></div>
-                <div class="img_area"><img src="img/daily/img_200105.jpg" alt=""/></div>
+                <div class="slick_thumb_wrap" id="js-drag" draggable="true">
+
+                </div>               
             </div>
         </div>
     </div>
@@ -69,9 +67,23 @@
 const $mask = $('.mask');
 const $layer_box = $('.layer_box');
 
-let item_idx = 0;
+let $js_slick = $('.js-slick');
+let $thumb_box = $('.js-slick_thumb .slick_thumb_wrap');
 
-function getData(abc) {
+const max_daily = $('.neung_daily_wrap .list_item').last().index(); //요소들 최대 갯수
+let this_idx = 0; //현재 인덱스
+let slick_idx = 0; //썸네일 확인 인덱스
+
+
+function jsSlickDestroy() {//slick 삭제, 초기화
+    $layer_box.removeClass('on');
+    $js_slick.slick('destroy');
+
+    $js_slick.html('');
+    $thumb_box.html('');
+}
+
+function getData(abc) {//데이터 가져오기
     $.ajax({
         type : "post",
         url : "./daily_data.php", 
@@ -84,93 +96,131 @@ function getData(abc) {
            const title = data[1];
            const hash = data[2];
            let imgs = data[3];
+           const note = data[4];
 
-           setLayer(date, title, hash, imgs);           
+           setLayer(date, title, hash, imgs, note);        
         }
     });
 }
 
-      
-       
-        
-        /* --------------------
-        * Slick.js 셋팅
-        ---------------------- */
-        let slick_idx = 0;
-        let thumb_box = $('.js-slick_thumb .img_area');
-        const $js_slick = $('.js-slick');
-        
-        function setLayer(date, title, hash, imgs) {//클릭한 레이어의 인덱스에 해당하는 내용 입력
-            $layer_box.find('.li_tit').text(title);
-            //$layer_box.find('.post_box').text()
-            $layer_box.find('.date .txt').text(date);
-            $layer_box.find('.date').attr('datatime', date);
-            $js_slick.find('.img_area').each(function(index){
-                $(this).find('img').attr('src', "img/daily/"+imgs[index]+".jpg");
-            });
-            thumb_box.each(function(index){
-                $(this).find('img').attr('src', "img/daily/"+imgs[index]+".jpg");
-            });
-        }
+              
+/* --------------------
+* Slick.js 셋팅
+---------------------- */        
+function setLayer(date, title, hash, imgs, note) {//클릭한 레이어의 인덱스에 해당하는 내용 입력
+    $layer_box.find('.li_tit').text(title);
+    $layer_box.find('.post_box').html(note)
+    $layer_box.find('.date .txt').text(date);
+    $layer_box.find('.date').attr('datatime', date);
 
+    makeElements(imgs.length); //이미지 박스 갯수 초기화
+
+    $js_slick.find('.img_area').each(function(index){
+        $(this).find('img').attr('src', "img/daily/"+imgs[index]+".jpg");
+    });
+    $thumb_box.find('.img_area').each(function(index){
+        $(this).find('img').attr('src', "img/daily/"+imgs[index]+".jpg");
+    });
+    $('.slick_thumb_wrap').width(105 * imgs.length);
+
+    //slick 초기화
+    $js_slick.slick({
+        dots: true,
+        slidesToShow: 1,
+        slidesToScroll:1,
+        arrows: false,
+        infinite:false
+    });
+    $js_slick.slick('slickGoTo',0);
+
+    turnArrow();
+
+    $layer_box.addClass('on');
+}
+
+//sync from slick index
+$js_slick.on('afterChange', function(event, slick, currentSlide) {
+    $thumb_box.find('.img_area').removeClass('active');
+    slick_idx = currentSlide;
+    $thumb_box.find('.img_area').eq(slick_idx).addClass('active');
+});
+//썸네일 클릭하면 slick에 index 적용
+$(document).on('click', '.js-slick_thumb .img_area', function(e){
+    e.stopPropagation();
+    const idx = $(this).index();
+    $js_slick.slick('slickGoTo',idx);
+});
+
+/* ----------------------
+* slick이외 
+*---------------------- */
+function makeElements(cnt) {//이미지 갯수만큼 요소 생성
+    let divel, imgel;
+
+    for (i=0; cnt > i; i++) {
+        divel = document.createElement('div');
+        divel.classList.add('img_area');
+        imgel = new Image();
+        imgel.src = '';
+        divel.appendChild(imgel);
+        
+        $js_slick.append(divel);
+    }
+    const copyel = $js_slick.html();
+    $thumb_box.append(copyel);
+}
+
+function turnArrow() {//처음과 마지막 글일 때 화살표 온오프
+    if (max_daily == this_idx ) {
+        $('.btn_nextpost').addClass('off');
+    } else if (this_idx == 0) {
+        $('.btn_prevpost').addClass('off');
+    } else {
+        $('.btn_nextpost, .btn_prevpost').removeClass('off');
+    }
+}
+
+$(document).on('click', '.js-postdetail', function(){//레이어로 자세히 보기 클릭
+    this_idx = $(this).closest('.list_item').index();
+
+    $mask.addClass('on');
+
+    getData(this_idx);
+}).on('click', '.js-closelayer', function(){//레이어 닫기
+    $mask.removeClass('on');         
     
-        function jsSlickInit() {//slick 초기화        
-            $js_slick.slick({
-                dots: true,
-                slidesToShow: 1,
-                slidesToScroll:1,
-                arrows: false,
-                infinite:false
-            });
-            $layer_box.addClass('on');
-        }
+    jsSlickDestroy();
+}).on('click', '.js-prevpost', function (){//레이어 왼쪽 화살표 클릭
+    jsSlickDestroy();
+    
+    this_idx--;
+    getData(this_idx);
+}).on('click', '.js-nextpost', function (){//레이어 우측 화살표 클릭
+    jsSlickDestroy();    
+    
+    this_idx++;       
+    getData(this_idx);    
+});      
 
-        function jsSlickDestroy() {//slick 삭제
-            $layer_box.removeClass('on');
-            $js_slick.slick('destroy');
-        }
 
-        //sync from slick index
-        $js_slick.on('afterChange', function(event, slick, currentSlide) {
-            thumb_box.removeClass('active');
-            slick_idx = currentSlide;
-            thumb_box.eq(slick_idx).addClass('active');
-        });
 
-        //썸네일 클릭하면 slick에 index 적용
-        $(document).on('click', '.js-slick_thumb .img_area', function(e){
-            e.stopPropagation();
-            const idx = $(this).index();
-            $js_slick.slick('slickGoTo',idx);
-        });
+function dragstartHandler(e) {
+    console.log('start');
+    e.dataTransfer.setData('text/uri-list', e.target.id);    
+    e.dataTransfer.dropEffect = "move";
+}
 
-        /* ----------------------
-         * slick이외 일반 클릭 이벤트 모음 
-         *---------------------- */
-        $(document).on('click', '.js-postdetail', function(){//레이어로 자세히 보기 클릭
-            const this_idx = $(this).closest('.list_item').index();
 
-            $mask.addClass('on');
-            getData(this_idx);
-            
-            jsSlickInit();
-        }).on('click', '.js-closelayer', function(){//레이어 닫기
-            $mask.removeClass('on');         
-            jsSlickDestroy();
-        }).on('click', '.js-prevpost', function (){
-            jsSlickDestroy();
+window.addEventListener('DOMContentLoaded', () => {
 
-          //  ++item_idx;
-            
+    const element = document.getElementById("js-drag");
+    element.addEventListener("dragstart", dragstartHandler);
+    
 
-                        
-        }).on('click', '.js-nextpost', function (){
-            $layer_box.removeClass('on');
-            
-            
+});
 
-        });
 </script>
+
 <?php
     include_once('footer.php');
 ?>
