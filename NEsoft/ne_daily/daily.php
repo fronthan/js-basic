@@ -41,7 +41,7 @@
 </div>
 <div class="layer_box">
     <div class="post_wrap">
-        <div class="js-slick">
+        <div class="js-slick" id="js_slick">
 
         </div>
         <div class="daily_detail_box">
@@ -53,7 +53,7 @@
                 <div class="post_box"></div>
             </div>
             <div class="js-slick_thumb">
-                <div class="slick_thumb_wrap" id="js-drag" draggable="true">
+                <div class="slick_thumb_wrap" id="js_slick_thumb">
 
                 </div>               
             </div>
@@ -67,21 +67,16 @@
 const $mask = $('.mask');
 const $layer_box = $('.layer_box');
 
-let $js_slick = $('.js-slick');
-let $thumb_box = $('.js-slick_thumb .slick_thumb_wrap');
+let $js_slick = $('#js_slick');
+let $js_slick_thumb = $('#js_slick_thumb');
+const thumb_wrap = document.getElementById('js_slick_thumb');
 
 const max_daily = $('.neung_daily_wrap .list_item').last().index(); //요소들 최대 갯수
 let this_idx = 0; //현재 인덱스
 let slick_idx = 0; //썸네일 확인 인덱스
 
+let main_slider, thumb_slider;
 
-function jsSlickDestroy() {//slick 삭제, 초기화
-    $layer_box.removeClass('on');
-    $js_slick.slick('destroy');
-
-    $js_slick.html('');
-    $thumb_box.html('');
-}
 
 function getData(abc) {//데이터 가져오기
     $.ajax({
@@ -103,10 +98,6 @@ function getData(abc) {//데이터 가져오기
     });
 }
 
-              
-/* --------------------
-* Slick.js 셋팅
----------------------- */        
 function setLayer(date, title, hash, imgs, note) {//클릭한 레이어의 인덱스에 해당하는 내용 입력
     $layer_box.find('.li_tit').text(title);
     $layer_box.find('.post_box').html(note)
@@ -118,42 +109,31 @@ function setLayer(date, title, hash, imgs, note) {//클릭한 레이어의 인�
     $js_slick.find('.img_area').each(function(index){
         $(this).find('img').attr('src', "img/daily/"+imgs[index]+".jpg");
     });
-    $thumb_box.find('.img_area').each(function(index){
+    $js_slick_thumb.find('.img_area').each(function(index){
         $(this).find('img').attr('src', "img/daily/"+imgs[index]+".jpg");
     });
-    $('.slick_thumb_wrap').width(105 * imgs.length);
 
     //slick 초기화
-    $js_slick.slick({
+    main_slider = $('#js_slick').slick({
         dots: true,
         slidesToShow: 1,
-        slidesToScroll:1,
         arrows: false,
-        infinite:false
+        infinite:false,
+        asNavFor: '#js_slick_thumb'
     });
-    $js_slick.slick('slickGoTo',0);
+    
+    thumb_slider = $('#js_slick_thumb').slick({
+        asNavFor: '#js_slick',
+        infinite: false,
+        arrows:false,
+        slidesToShow: 4
+    })
 
     turnArrow();
 
     $layer_box.addClass('on');
 }
 
-//sync from slick index
-$js_slick.on('afterChange', function(event, slick, currentSlide) {
-    $thumb_box.find('.img_area').removeClass('active');
-    slick_idx = currentSlide;
-    $thumb_box.find('.img_area').eq(slick_idx).addClass('active');
-});
-//썸네일 클릭하면 slick에 index 적용
-$(document).on('click', '.js-slick_thumb .img_area', function(e){
-    e.stopPropagation();
-    const idx = $(this).index();
-    $js_slick.slick('slickGoTo',idx);
-});
-
-/* ----------------------
-* slick이외 
-*---------------------- */
 function makeElements(cnt) {//이미지 갯수만큼 요소 생성
     let divel, imgel;
 
@@ -167,7 +147,7 @@ function makeElements(cnt) {//이미지 갯수만큼 요소 생성
         $js_slick.append(divel);
     }
     const copyel = $js_slick.html();
-    $thumb_box.append(copyel);
+    $js_slick_thumb.append(copyel);
 }
 
 function turnArrow() {//처음과 마지막 글일 때 화살표 온오프
@@ -179,6 +159,23 @@ function turnArrow() {//처음과 마지막 글일 때 화살표 온오프
         $('.btn_nextpost, .btn_prevpost').removeClass('off');
     }
 }
+
+function jsSlickDestroy() {//slick 삭제, 초기화
+    $layer_box.removeClass('on');
+    main_slider.slick('destroy');
+    thumb_slider.slick('destroy');
+
+    $js_slick.html('');
+    $js_slick_thumb.html('');
+}
+
+//썸네일 클릭하면 main-slick 에 active 적용
+$(document).on('click', '.js-slick_thumb .img_area', function(e){
+    e.stopPropagation();
+    const idx = $(this).index();
+    $js_slick.slick('slickGoTo',idx);
+});
+
 
 $(document).on('click', '.js-postdetail', function(){//레이어로 자세히 보기 클릭
     this_idx = $(this).closest('.list_item').index();
@@ -199,26 +196,9 @@ $(document).on('click', '.js-postdetail', function(){//레이어로 자세히 �
     jsSlickDestroy();    
     
     this_idx++;       
+
     getData(this_idx);    
-});      
-
-
-
-function dragstartHandler(e) {
-    console.log('start');
-    e.dataTransfer.setData('text/uri-list', e.target.id);    
-    e.dataTransfer.dropEffect = "move";
-}
-
-
-window.addEventListener('DOMContentLoaded', () => {
-
-    const element = document.getElementById("js-drag");
-    element.addEventListener("dragstart", dragstartHandler);
-    
-
 });
-
 </script>
 
 <?php

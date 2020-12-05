@@ -1,7 +1,4 @@
 @charset "UTF-8";
-/* ----------------------------
-        공통 
------------------------------*/
 .page_tit { padding: 3.2rem 2.2rem; border-bottom: 3px solid #323349; font-size: 3.6rem; font-weight: 700; letter-spacing: -0.75px; }
 
 .neung_daily_cont { max-width: 1080px; margin: 0 auto; }
@@ -26,7 +23,9 @@
 
 .neung_daily_wrap .cont_tail { display: flex; flex-direction: row; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 1px solid #bbb; }
 
-.neung_daily_wrap .cont_tail .btn_detail { display: block; width: 112px; height: 36px; padding: 0 17px; line-height: 36px; background: #bbb; font-size: 1.4rem; letter-spacing: -0.6px; color: #fff; cursor: pointer; }
+.neung_daily_wrap .cont_tail .btn_detail { display: block; width: 112px; height: 36px; padding: 0 17px; line-height: 36px; box-sizing: border-box; background: #bbb; font-size: 1.4rem; letter-spacing: -0.6px; color: #fff; cursor: pointer; }
+
+.neung_daily_wrap .cont_tail .btn_detail:hover { background: #ffb64e; }
 
 .neung_daily_wrap .cont_tail .date { display: block; width: 100px; letter-spacing: -0.4px; font-size: 1.4rem; color: #bbb; text-align: right; }
 
@@ -50,7 +49,7 @@
 
 .js-slick .slick-dots { position: absolute; bottom: 20px; left: 0; width: 100%; display: flex; justify-content: center; align-items: center; }
 
-.js-slick .slick-dots li { padding: 0 5px; }
+.js-slick .slick-dots li { padding: 0 3px; }
 
 .js-slick .slick-dots li.slick-active button { background: #000; opacity: .3; cursor: default; }
 
@@ -70,15 +69,13 @@
 
 .daily_detail_box .js-slick_thumb { width: calc(100% - 8rem); height: 88px; overflow: hidden; position: absolute; bottom: 3.5rem; left: 4rem; }
 
-.daily_detail_box .js-slick_thumb .slick_thumb_wrap { display: flex; height: 100%; }
+.daily_detail_box .js-slick_thumb .slick_thumb_wrap { height: 100%; }
 
 .daily_detail_box .js-slick_thumb .img_area { position: relative; max-width: 115px; width: 100%; height: 100%; margin-right: 10px; cursor: pointer; }
-
-.daily_detail_box .js-slick_thumb .img_area img { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
 
 .daily_detail_box .js-slick_thumb .img_area:after { content: ''; display: block; width: 100%; height: 100%; position: absolute; top: 0; left: 0; background: rgba(0, 0, 0, 0.4); transition: .3s; z-index: 1; }
 
 .daily_detail_box .js-slick_thumb .img_area:hover:after { background: rgba(0, 0, 0, 0); }
 
-.daily_detail_box .js-slick_thumb .img_area.active:after { background: rgba(0, 0, 0, 0); }
+.daily_detail_box .js-slick_thumb .img_area.slick-current:after { background: rgba(0, 0, 0, 0); }
 /*# sourceMappingURL=daily.css.map */
