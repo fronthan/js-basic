@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="reset_browser.css">
+    <link rel="stylesheet" href="style.css">
+    <title>북마크</title>
+</head>
+<body>
+    <div class="my_bookmark">
+        <header class="bmhd_wrap">
+            <ul class="bm_header">
+                <li>DEV</li>
+                <li>LIFE</li>
+                <li>PRIVATE</li>
+            </ul>
+        </header>
+
+        <main class="bm_wrap js-wrap">
+            <div class="bm_cont">
+                <div class="list_wrap">
+                    <h2 class="tit_category">개발 일반</h2>
+                    <ul class="bm_list">
+                        <li>GITHUB repository</li>
+                        <li>GITHUB js-basic</li>
+                        <li>GITLAB</li>
+                        <li>가비아 gabia</li>
+                        <li>mongoDB</li>
+                    </ul>
+                </div>
+            </div>
+            
+
+           
+        </main>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+const bm_wrap = document.querySelector('.js-wrap');
+
+/***
+ * 클릭 이벤트
+ ***/  
+document.addEventListener('click', ifClick);
+
+function ifClick(eventobj) {
+    const current_tg = eventobj.target;
+    const li_boolean = current_tg.tagName.toUpperCase() == 'LI';
+    
+    if ( li_boolean ) {
+        if (current_tg.closest('.bm_header')) {
+            const click_page = current_tg.textContent;
+            let load_page = '';
+            switch(click_page) {
+                case 'DEV' :
+                    load_page = 'bmDev';
+                    break;
+                case 'LIFE' :
+                    load_page = 'bmLife';
+                    break;
+                case 'PRIVATE' :
+                    load_page = 'bmPrivate';
+                    break;
+            }
+           // init(load_page);
+        }    
+    
+        if (current_tg.closest('.bm_wrap')) {
+            const link = current_tg.getAttribute('data-link');       
+            window.location.href = link;
+        }
+    }
+}
+
+
+
+</script>
+
+</body>
+</html>
