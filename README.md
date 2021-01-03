@@ -16,3 +16,6 @@
 - 2020.10.25 초간단 달력 만들기 [Link](https://fronthan.github.io/js-basic/simpleCalendar/simple_calendar.html)
 
 - 2020.10.29 허가된 명단 고르기 [Link](https://fronthan.github.io/js-basic/guestList/guestList.html)
+
+- 2020.12.04 능이소프트 능이의 일상 리뉴얼 [Link](https://fronthan.github.io/js-basic/NEsoft/ne_daily/daily.php)
+
