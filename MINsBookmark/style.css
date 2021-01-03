@@ -16,7 +16,7 @@
 
 .bm_header { display: flex; justify-content: space-around; width: 1200px; margin: 0 auto; }
 
-.bm_header li { padding: 20px 0; color: #ddd; font-size: 3rem; }
+.bm_header li { padding: 20px 0; color: #999; font-size: 3rem; }
 
 .bm_header li:hover { text-decoration: underline; text-decoration-color: #ffee33; cursor: pointer; }
 
@@ -26,7 +26,9 @@
 
 .bm_wrap { width: 1200px; margin: 0 auto; padding: 40px 10px; color: #1e1e1e; }
 
-.bm_cont { display: flex; padding-top: 30px; }
+.js-toggle_active { display: none; }
+
+.bm_cont { padding-top: 30px; }
 
 .bm_cont:first-of-type { padding-top: 10px; }
 
@@ -34,7 +36,13 @@
 
 .tit_category { padding: 2rem 0; font-size: 2.2rem; font-weight: bold; }
 
-.list_wrap { width: 25%; }
+.list_wrap { display: flex; }
+
+.list_cont { width: 25%; }
+
+.list_cont .bm_list { width: initial; }
+
+.bm_list { width: 25%; }
 
 .bm_list li { padding: 10px; font-size: 1.6rem; }
 
