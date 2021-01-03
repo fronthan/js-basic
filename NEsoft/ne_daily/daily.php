@@ -2,7 +2,7 @@
     include_once('head.php');
     include_once('header.php');
     include_once('daily_arrays.php'); 
-
+//20.12월 코드 정리, 업그레이드
 ?>
 <link rel="stylesheet" href="css/slick.css">
 <div class="ne_daily">
@@ -35,10 +35,10 @@
 </div>
 
 <div class="mask">
-    <i class="btn_closepop js-closelayer">
-        <span class="blind">레이어 팝업 닫기</span>
-    </i>
 </div>
+<span class="btn_closepop js-closelayer">
+    <span class="blind">레이어 팝업 닫기</span>
+</span>
 <div class="layer_box">
     <div class="post_wrap">
         <div class="js-slick" id="js_slick">
@@ -65,6 +65,7 @@
 <script src="js/slick.min.js"></script>
 <script>    
 const $mask = $('.mask');
+const $btn_close = $('.btn_closepop');
 const $layer_box = $('.layer_box');
 
 let $js_slick = $('#js_slick');
@@ -119,14 +120,18 @@ function setLayer(date, title, hash, imgs, note) {//클릭한 레이어의 인�
         slidesToShow: 1,
         arrows: false,
         infinite:false,
-        asNavFor: '#js_slick_thumb'
+        fade:true,
+        asNavFor: '#js_slick_thumb',
+        zIndex:100
     });
     
     thumb_slider = $('#js_slick_thumb').slick({
-        asNavFor: '#js_slick',
         infinite: false,
         arrows:false,
-        slidesToShow: 4
+        slidesToShow: 4,
+        slidesToScroll: 2,
+        asNavFor: '#js_slick',
+        focusOnSelect: true
     })
 
     turnArrow();
@@ -172,8 +177,7 @@ function jsSlickDestroy() {//slick 삭제, 초기화
 //썸네일 클릭하면 main-slick 에 active 적용
 $(document).on('click', '.js-slick_thumb .img_area', function(e){
     e.stopPropagation();
-    const idx = $(this).index();
-    $js_slick.slick('slickGoTo',idx);
+    $(this).addClass('slick-current').siblings('.img_area').removeClass('slick-current');    
 });
 
 
@@ -181,12 +185,14 @@ $(document).on('click', '.js-postdetail', function(){//레이어로 자세히 �
     this_idx = $(this).closest('.list_item').index();
 
     $mask.addClass('on');
+    $btn_close.addClass('on');
 
     getData(this_idx);
 }).on('click', '.js-closelayer', function(){//레이어 닫기
-    $mask.removeClass('on');         
-    
     jsSlickDestroy();
+    
+    $mask.removeClass('on');       
+    $btn_close.removeClass('on');
 }).on('click', '.js-prevpost', function (){//레이어 왼쪽 화살표 클릭
     jsSlickDestroy();
     
