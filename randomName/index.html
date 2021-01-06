@@ -15,7 +15,7 @@
   <body>
     <div class="main_container">
         <h1>무작위 이름 출력 : 선언된 배열의 이름 중 무작위</h1>
-        <p>20.11.</p>       
+        <p>21.01.</p>
 
         <section class="result">
     
@@ -32,28 +32,25 @@
     
         function init() {
             let random_number = chooseName();
+            console.log(random_number);
             
             const cookieCheck = getCookie("todayCookie");
-           
+                       
             if (cookieCheck == null) {//당일 처음 들어오면
                 setCookie("todayCookie", "justtodaycookie", 1);
-                setStorage(random_number);
+                setStorage(random_number);                
             } else {
-               // localStorage.getItem('lastNumber')
                 let pre_nbr = localStorage.getItem("lastNumber");
-              //  console.log(pre_nbr);
-                //alert('로컬스토리지 값 = '+pre_nbr);
                 compareNbr(pre_nbr, random_number);
             }
         }
 
         function chooseName() {// 랜덤 숫자 추출 
-            return Math.floor(Math.random()*names.length);       
+            return Math.floor(Math.random()*names.length);
         }
 
         function compareNbr(pre, now) {//로컬 스토리지와 값 비교
             let i, compare_again;
-//console.log(pre, now);
 
             if (pre == now) {
                 compare_again = chooseName();
@@ -64,15 +61,12 @@
                 }
             }
 
-         //   console.log(i, compare_again);
-            
-
             setStorage(compare_again);
         }
         
-        function setStorage(num) {
-            para.textContent = names[num];
-            localStorage.lastNumber = num;
+        function setStorage(n) {
+            para.textContent = names[n];
+            localStorage.lastNumber = n;
         }
 
         //쿠키 셋팅 (당일 한정)
@@ -83,8 +77,9 @@
         }
 
         //쿠키확인
-        function getCookie(today) {
-            var value = document.cookie.match('(^|;) ?' + today + '=([^;]*)(;|$)');          
+        function getCookie(today_yn) {            
+            var value = document.cookie.match('(^|;) ?' + today_yn + '=([^;]*)(;|$)');
+            
             return value ? value[2] : null;
         }
 
