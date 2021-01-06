@@ -39,7 +39,7 @@
                 setCookie("todayCookie", "justtodaycookie", 1);
                 setStorage(random_number);                
             } else {
-                set_nbr = localStorage.getItem("lastNumber");
+                set_nbr = localStorage.getItem("lastnumber");
                 console.log(set_nbr);
                 compareNbr(set_nbr, random_number);
             }
@@ -66,7 +66,7 @@
         
         function setStorage(n) {
             para.textContent = names[n];
-            localStorage["lastNumber"] = n;
+            localStorage["lastnumber"] = n;
         }
 
         //쿠키 셋팅 (당일 한정)
