@@ -19,3 +19,5 @@
 
 - 2020.12.04 능이소프트 능이의 일상 리뉴얼 [Link](https://fronthan.github.io/js-basic/NEsoft/ne_daily/daily.php)
 
+- 2021.01.06 쿠키와 배열 연습 (랜덤 이름 출력하기) [Link](https://fronthan.github.io/js-basic/randomName/index.html)
+
