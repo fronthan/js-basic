@@ -21,3 +21,7 @@
 
 - 2021.01.06 쿠키와 배열 연습 (랜덤 이름 출력하기) [Link](https://fronthan.github.io/js-basic/randomName/index.html)
 
+- 2021.01.07 바보 이야기 생성기 [Link](https://fronthan.github.io/js-basic/sillyStoryGenerator/index.html)
+
+
+
