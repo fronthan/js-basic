@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>JSON</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Faster+One" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <div class="tit_game">JSON, XMLHttpRequest 공부</div>
+    <p class="tit_date"> 2021.01.08</p>
+    <div>
+          <a href="https://developer.mozilla.org/ko/docs/Learn/JavaScript/Objects/JSON#%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0">mdn > Web 개발 학습하기
+            JavaScript - 동적인 클라이언트측 스크립트 언어 > JavaScript 객체 소개 > JSON으로 작업하기</a>
+
+      </div>
+      <header>
+
+      </header>
+
+      <section>
+
+      </section>
+
+    <script>
+    const header = document.querySelector('header');
+    const section = document.querySelector('section');
+
+    var requestURL = 'https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json';
+
+    var request = new XMLHttpRequest();
+    request.open('GET', requestURL);
+    request.responseType='json';
+    request.send();
+    request.onload = function(){//request가 성공했을 때만 작동하므로, request.response가 가능한 것
+        var superHeroes = request.response;
+        populateHeader(superHeroes);
+        showHeroes(superHeroes);
+    }
+
+    function populateHeader(json_obj) {
+        var myH1 = document.createElement('h1');
+        myH1.textContent = json_obj['squadName'];
+        header.appendChild(myH1);
+
+        var myPara = document.createElement('p');
+        myPara.textContent = 'Hometown: ' + json_obj["homeTown"] + ' // Formed: ' + json_obj["formed"];
+        header.appendChild(myPara);
+    }
+
+
+    function showHeroes(json_obj) {
+        var heroes = json_obj['members'];
+
+        for (var i = 0; i <heroes.length; i++) {
+            var my_article = document.createElement('article');
+            var my_h2 = document.createElement('h2');
+            var my_para1 = document.createElement('p');
+            var my_para2 = document.createElement('p');
+            var my_para3 = document.createElement('p');
+            var my_list = document.createElement('ul');
+
+            my_h2.textContent = heroes[i].name;
+            my_para1.textContent = '암호명 : ' +heroes[i].secretIdentity;
+            my_para2.textContent = "나이: " +heroes[i].age;
+            my_para3.textContent = '필살기 : ';
+            
+            var super_powers = heroes[i].powers;
+            for( var j=0; j < super_powers.length; j++) {
+                var list_item = document.createElement('li');
+                list_item.textContent = super_powers[j];
+                my_list.appendChild(list_item);
+            }
+
+            my_article.appendChild(my_h2);
+            my_article.appendChild(my_para1);
+            my_article.appendChild(my_para2);
+            my_article.appendChild(my_para3);
+            my_article.appendChild(my_list);
+
+            section.appendChild(my_article);
+
+        }
+    }
+    </script>
+  </body>
+</html>
