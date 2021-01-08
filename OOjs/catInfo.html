@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고양이들의 정보</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="main_container">
+    <h1 class="tit_game">고양이들의 정보 보기</h1>
+    <p class="tit_date">21.01.</p>
+    <a href="https://developer.mozilla.org/ko/docs/Learn/JavaScript/Objects/%EC%96%BC%EB%A7%88%EB%82%98_%EC%9D%B4%ED%95%B4%ED%96%88%EB%8A%94%EC%A7%80_%ED%99%95%EC%9D%B8%ED%95%B4%EB%B3%B4%EC%9E%90:_JSON#json_1">Web 개발 학습하기 >
+        JavaScript - 동적인 클라이언트측 스크립트 언어 > JavaScript 객체 소개 > 얼마나 이해했는지 확인해보자: JSON</a>
+
+    
+
+</div>
+
+
+    
+
+<script>
+const section = document.querySelector('section');
+
+let para1 = document.createElement('p');
+let para2 = document.createElement('p');
+
+let motherInfo = 'The mother cats are called ';
+let kittenInfo;
+
+fetch('sample.json')
+.then(response => response.text())
+.then(text => displayCatInfo(text))
+
+function displayCatInfo(catString) {
+let total = 0;
+let male = 0;
+
+// Add your code here
+
+
+
+// Don't edit the code below here!
+
+para1.textContent = motherInfo;
+para2.textContent = kittenInfo;
+}
+
+section.appendChild(para1);
+section.appendChild(para2);
+document.querySelector('.main_container').appendChild(section);
+</script>
+</body>
+</html>
