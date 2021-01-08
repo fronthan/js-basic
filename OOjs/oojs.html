@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Object-oriented JavaScript inheritance</title>
+</head>
+
+<body>
+  <h1>객체 상속</h1>
+  <a href="https://developer.mozilla.org/ko/docs/Learn/JavaScript/Objects/Inheritance#%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0">MDN > web 개발 학습하기 > Javascript - 동적인 클라이언트측 스크립트 언어 > JavaScript 객체 소개 > inheritance in JavaScript</a>
+  <div>
+    <label for="jscode">Enter code:</label>
+    <input type="text" id="jscode">
+    <button>Submit code</button>
+  </div>
+
+  <p></p>
+</body>
+
+<script>
+  const input = document.querySelector('input');
+  const btn = document.querySelector('button');
+  const para = document.querySelector('p');
+
+  btn.onclick = function () {
+    const code = input.value;
+    para.textContent = eval(code);
+  }
+
+  //생성자 함수 정의, 속성만
+  function Person(first, last, age, gender, interests) {
+    this.name = {
+      first,
+      last
+    };
+    this.age = age;
+    this.gender = gender;
+    this.interests = interests;
+  };
+
+  Person.prototype.bio = function () {//Person 생성자의 메소드 정의
+
+    // 메인 문장 정의
+    let string = this.name.first + ' ' + this.name.last + ' is ' + this.age + ' years old. ';
+
+    // 성별, 호칭을 문장에서 구분 & 메인 문장과 합치기
+    let pronoun;
+    if (this.gender === 'male' || this.gender === 'Male' || this.gender === 'm' || this.gender === 'M') {
+      pronoun = 'He likes ';
+    } else if (this.gender === 'female' || this.gender === 'Female' || this.gender === 'f' || this.gender === 'F') {
+      pronoun = 'She likes ';
+    } else {
+      pronoun = 'They like ';
+    }
+
+    string += pronoun;
+
+    // 취미 개수에 따른 문장 처리
+    if (this.interests.length === 1) {
+      string += this.interests[0] + '.';
+    } else if (this.interests.length === 2) {
+      string += this.interests[0] + ' and ' + this.interests[1] + '.';
+    } else {
+      // 취미가 3개 이상일 경우, 갯수만큼 반복문을 돌리고, 각각에 콤마와 마지막 취미 앞에 and를 붙인다.
+      for (let i = 0; i < this.interests.length; i++) {
+        if (i === this.interests.length - 1) {
+          string += 'and ' + this.interests[i] + '.';
+        } else {
+          string += this.interests[i] + ', ';
+        }
+      }
+    }
+
+    // 완성된 문자 알럿
+    alert(string);
+  };
+
+  Person.prototype.greeting = function () {
+    alert('Hi! I\'m ' + this.name.first + '.');
+  };
+
+  Person.prototype.farewell = function () {
+    alert(this.name.first + ' has left the building. Bye for now!');
+  }
+
+  let person1 = new Person('Tammi', 'Smith', 17, 'female', ['music', 'skiing', 'kickboxing']);
+
+  
+  function Teacher(first, last, age, gender, interests, subject) {//call 함수로 Person을 이용해 teacher 생성자 함수 정의. Person을 상속받으므로 같은 매개변수를 전달한다.
+    Person.call(this, first, last, age, gender, interests); //this 가 Person을 가리킨다.
+
+    this.subject = subject; //Teacher만이 갖는 속성
+  }
+
+Teacher.prototype = Object.create(Person.prototype); //Person의 모든 메소드를 사용할 수 있다. 단, constructor 속성이 Person
+Teacher.prototype.constructor = Teacher; // Teacher.prototype.constructor 가 Teacher()를 반환하고, Person()도 상속받는다.
+
+Teacher.prototype.greeting = function() { //teacher만의 greeting 메소드
+  var prefix;
+
+  if ( this.gender === 'male' || this.gender === 'Male' || this.gender === 'm' || this.gender === 'M' ) {
+    prefix = "Mr.";
+  } else if (this.gender === 'female' || this.gender === 'Female' || this.gender === 'f' || this.gender === 'F') {
+    prefix= "Mrs.";
+  } else {
+    prefix = "Mx.";
+  }
+
+  alert('Hello. My name is ' + prefix + ' ' + this.name.last + ', and I teach ' + this.subject + '.');
+}
+
+
+var teacher1 = new Teacher('Dave', 'Griffiths', 31, 'male', ['football', 'cookery'], '수학');
+
+
+</script>
+
+</html>
