@@ -23,6 +23,8 @@
 
 - 2021.01.07 바보 이야기 생성기 [Link](https://fronthan.github.io/js-basic/sillyStoryGenerator/index.html)
 
+- 2021.01.11 json 데이터 다루기 (고양이 가족 정보 출력) [Link](https://fronthan.github.io/js-basic/OOjs/catInfo.html)
+
 
 
 

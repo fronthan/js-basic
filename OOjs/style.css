@@ -1,25 +1,29 @@
 html { font-family: 'helvetica neue', helvetica, arial, sans-serif; background: #000;}
-  
-  body { width: 1000px; margin: 0 auto; color:#ddd}
-  
-  
-.tit_game { color: #fff; font-size: 40px; }
+body { width: 1000px; margin: 0 auto; color:#ddd}
 
+.tit_game { color: #fff; font-size: 40px; }
 .tit_date { color: #ccc; }
 a { font:inherit; color:#aaa}
-  h1, h2 { font-family: cursive; }
-  
-  /* header styles */
-  
-  h1 { font-size: 4rem; text-align: center; }
-  
-  header p { font-size: 1.3rem; font-weight: bold; text-align: center; }
-  
-  /* section styles */
-  section {display: flex; justify-content: space-between;}
-  
-  section p { margin: 5px 0; }
-  
-  section ul { margin-top: 0; }
+.study_page {line-height: 50px;}
+.note_txt {display: block; color:#acacac;}
+h1, h2 { font-family: cursive; }
 
-  h2 { font-size: 2.5rem; letter-spacing: -5px; margin-bottom: 10px; }
+/* json1, json2, oojs */
+h1 { font-size: 4rem; text-align: center; }
+header p { font-size: 1.3rem; font-weight: bold; text-align: center; }
+
+section {display: flex; justify-content: space-between;}
+section p { margin: 5px 0; }
+section ul { margin-top: 0; }
+
+h2 { font-size: 2.5rem; letter-spacing: -5px; margin-bottom: 10px; }
+h2 .mom_breed {padding-left: 20px;
+    font-family: serif; font-size: 1.2rem; letter-spacing: 1px}
+
+/* catInfo */
+.sub_tit {margin-top: 80px; font-size: 1.8rem; text-align: center;}
+.cats_container {display: flex; justify-content: space-between;;}
+.kits_m {color:skyblue}
+.kits_f {color:pink}
+.cats_container ul {padding: 0 30px}
+.cats_container li {padding: 10px 0 0;}
