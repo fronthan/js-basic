@@ -211,14 +211,14 @@ function changePage(idx) {
     
     
     if ( idx == '2') {
-        const check_myhouse = ip();
-        if ( check_myhouse !== '182.213.166.116' ) {
-            const insert_pw = prompt('do you know pw?');
+   //     const check_myhouse = ip();
+       // if ( check_myhouse !== '182.213.166.116' ) {
+            // const insert_pw = prompt('do you know pw?');
             
-            if ( insert_pw !== '개발') {
-                return false;
-            }
-        }
+            // if ( insert_pw !== '개발') {
+            //     return false;
+            // }
+      //  }
         $('.private_container').load('private.html');
     }
     tg_box[idx].style.display = 'block';
