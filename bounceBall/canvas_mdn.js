@@ -49,6 +49,20 @@ Ball.prototype.update = function() {
   this.y += this.velY;
 }
 
+Ball.prototype.collisionDetect = function() {//이런 것도 있다
+  for (let j=0; j<balls.length; j++) {
+    if (!(this === balls[j])) { //현재 공 자기 자신을 빼고 충돌할 때 색깔 변경
+      const dx = this.x - balls[j].x;
+      const dy = this.y - balls[j].y;
+      const distance = Math.sqrt(dx * dx + dy*dy);
+
+      if (distance < this.size + balls[j].size) {
+        balls[j].color = this.color = 'rgb(' + random(0,255) + ',' + random(0,255) + ',' + random(0,255) + ')';
+      }
+    }
+  }
+}
+
 //공 25개 만들기
 let balls = [];
 while (balls.length < 25) {
@@ -63,7 +77,6 @@ while (balls.length < 25) {
 
   balls.push(ball);
 }
-balls[i].collisionDetect(); 
 
 
 // 색깔 바꾸기, 움직이기
@@ -74,25 +87,10 @@ function loop() {
   for (let i=0; i<balls.length; i++) {
     balls[i].draw();
     balls[i].update();
+    balls[i].collisionDetect(); 
   }
 
   requestAnimationFrame(loop);
 }
 
 loop();
-
-
-
-Ball.prototype.collisionDetect = function() {//이런 것도 있다
-  for (let j=0; j<balls.length; j++) {
-    if (!(this === balls[j])) { //현재 공 자기 자신을 빼고 충돌할 때 색깔 변경
-      const dx = this.x - balls[j].x;
-      const dy = this.y - balls[j].y;
-      const distance = Math.sqrt(dx * dx + dy*dy);
-
-      if (distance < this.size + balls[j].size) {
-        balls[j].color = this.color = 'rgb(' + random(0,255) + ',' + random(0,255) + ',' + random(0,255) + ')';
-      }
-    }
-  }
-}
