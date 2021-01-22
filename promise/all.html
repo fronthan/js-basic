@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../common.css">
+    <title>all()</title>
+</head>
+<body>
+    <div class="main_container">
+        <div class="tit_area">
+            <h1 class="tit">비동기 프로그래밍 promise 공부</h1>
+            <p class="tit_date">21.01.22</p>
+            <a class="study_page" href="https://developer.mozilla.org/ko/docs/Learn/JavaScript/Asynchronous/Promises#explaining_basic_promise_syntax_a_real_example">Web 개발 학습하기 > JavaScript - 동적인 클라이언트측 스크립트 언어 >  Asynchronous JavaScript > Graceful asynchronous programming with Promises</a>
+            <span class="note_txt">* note : all() </span>
+        </div>
+
+        <div class="cont_area">
+
+
+        </div>
+      </div>
+<script>
+    let coffee = fetchAndDecode('coffee.jpg','blob');
+    let tea = fetchAndDecode('tea.jpg', 'blob');
+    let description = fetchAndDecode('all.txt','text');
+
+    Promise.all([coffee, tea, description]).then(values => {
+        console.log(values);
+
+        let object_url1 = URL.createObjectURL(values[0]);
+        let object_url2 = URL.createObjectURL(values[1]);
+        let desc_text = values[2];
+
+        let image1 = document.createElement('img');
+        let image2 = document.createElement('img');
+        image1.src = object_url1;
+        image2.src = object_url2;
+        document.querySelector('.cont_area').appendChild(image1);
+        document.querySelector('.cont_area').appendChild(image2);
+
+        let para = document.createElement('p');
+        para.textContent = desc_text;
+        document.querySelector('.cont_area').appendChild(para);
+    });
+    
+
+function fetchAndDecode(url, type) {//fetch 앞에 return을 추가하면, Promise 체이닝의 마지막 결과값을 함수의 결과로 반환해준다.
+    return fetch(url).then(response => {
+        if(type === 'blob') {
+            return response.blob();
+        } else if(type =='text'){
+            return response.text();
+        }
+    }).catch(e => {
+        console.log('fetch 에러: '+e.message);
+    })
+}
+</script>
+</body>
+</html>
