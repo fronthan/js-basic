@@ -5,4 +5,6 @@
 .btn:nth-child(2) { margin: 0 10px; }
 
 .btn:hover { background: #fefefe; }
+
+.btn:disabled { background: #dfdfdf; cursor: default; }
 /*# sourceMappingURL=index.css.map */
