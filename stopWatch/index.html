@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <title>간단한 시계</title>
+    <link rel="stylesheet" href="../common.css">
+    <link rel="stylesheet" href="css/index.css">
+  </head> 
+  <body>
+    <div class="main_container">
+        <div class="tit_area">
+            <h1 class="tit">스탑워치</h1>
+            <p class="tit_date">21.01.</p>
+            <a class="study_page" href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Timeouts_and_intervals#clearing_intervals">Web 개발 학습하기 > JavaScript - 동적인 클라이언트측 스크립트 언어 >  Asynchronous JavaScript > Cooperative asynchronous JavaScript: Timeouts and intervals > Active learning: Creating your own stopwatch!</a>
+            <span class="note_txt">* note : setTimeout .. </span>
+        </div>
+
+        <div class="btn_area">
+            <span class="btn js-start">시작</span>
+            <span class="btn js-stop">중지</span>
+            <span class="btn js-reset">초기화</span>
+        </div>
+        <p class="clock"></p>
+    </div>
+
+    <script>
+
+const clock = document.querySelector('.clock');
+const btn_start = document.querySelector('.js-start'),
+    btn_stop = document.querySelector('.js-stop'),
+    btn_reset = document.querySelector('.js-reset');
+
+    let time_interval='';
+    let date = Date();
+/* 
+** 클릭 이벤트
+*/
+document.body.addEventListener('click', clickEvent);
+
+function clickEvent(event) {
+    event.stopPropagation();
+
+    const click_target = event.target;
+    
+    if ( click_target == btn_start ) {
+       time_interval = setInterval(displayTime, 1000, 'start');
+    } else if ( click_target == btn_stop ) {
+        clearInterval(time_interval);
+        const stop_act = comfareTime();
+        clock.textContent = stop_act;
+    } else if ( click_target == btn_reset ) {
+        clearInterval(time_interval);
+        displayTime('reset');
+    }
+}
+
+function displayTime(type) {//시간 표시 함수
+    if (type == 'start') {
+        date = Date.now();
+
+        const add_time = comfareTime();
+    } else if (type == 'reset') {
+        date = '0';
+    }
+    
+    clock.textContent = date;
+}
+
+//경과 시간 계산 함수
+function comfareTime() {
+    const now = Date.now();
+
+    const cal_time = now - date;
+    
+    let milliseconds_time = cal_time / 60; 
+    
+    if ( milliseconds_time < 3600 ) {
+        milliseconds_time = '0 : ' +Math.floor(milliseconds_time)
+    } else {
+        milliseconds_time = Math.floor(milliseconds_time)
+    }
+
+    return milliseconds_time;
+}
+      
+    </script>
+  </body>
+</html>

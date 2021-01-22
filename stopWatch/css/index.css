@@ -1,0 +1,8 @@
+.btn_area { display: flex; align-items: center; }
+
+.btn { display: block; width: 100px; padding: 10px 0; background: #fff; border: 1px solid blueviolet; color: blueviolet; text-align: center; cursor: pointer; }
+
+.btn:nth-child(2) { margin: 0 10px; }
+
+.btn:hover { background: #fefefe; }
+/*# sourceMappingURL=index.css.map */
