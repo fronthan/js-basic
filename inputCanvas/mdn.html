@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../common.css">
+    <title>input canvas</title>
+</head>
+<body>
+    <div class="main_container">
+        <div class="tit_area">
+            <h1 class="tit">input & canvas 공부</h1>
+            <p class="tit_date">21.01.23</p>
+            <a class="study_page" href="https://developer.mozilla.org/ko/docs/Web/HTML/Element/input/button#%EC%98%88%EC%A0%9C">개발자를 위한 웹 기술 > HTML: Hypertext Markup Language > HTML 요소 참고서 > input : 입력 요소 > input type="button"</a>
+            <span class="note_txt">＊note : canvas, requestAnimationFrame</span>
+        </div>
+            <div class="toolbar">
+                <input type="color" aria-label="펜 색상">
+                <input type="range" min="2" max="50" value="15" aria-label="펜 크기"><span class="output">30</span>
+                <input type="button" value="캔버스 지우기">
+            </div>
+        <div class="cont_area">
+            
+              
+            <canvas class="js-canvas">
+                <p>Add suitable fallback here.</p>
+            </canvas>
+        </div>
+      </div>
+<script>
+const cont_area_w = document.querySelector('.cont_area').scrollWidth;
+const tit_area_h = document.querySelector('.tit_area').scrollHeight;
+
+var canvas = document.querySelector('.js-canvas');
+var width = canvas.width = cont_area_w;
+var height = canvas.height = window.innerHeight-85-tit_area_h;
+var ctx = canvas.getContext('2d');
+
+ctx.fillStyle = 'rgb(0,0,0)';
+ctx.fillRect(0,0,width,height);
+
+var color_picker = document.querySelector('input[type="color"]');
+var size_picker = document.querySelector('input[type="range"]');
+var output = document.querySelector('.output');
+var clear_btn = document.querySelector('input[type="button"]');
+
+// covert degrees to radians
+function degToRad(degrees) {
+  return degrees * Math.PI / 180;
+};
+
+// update sizepicker output value
+size_picker.oninput = function() {
+  output.textContent = size_picker.value;
+}
+
+// store mouse pointer coordinates, and whether the button is pressed
+var curX;
+var curY;
+var pressed = false;
+
+// 마우스 포인터 위치
+document.onmousemove = function(e) {
+    curX = e.layerX;
+    curY = e.layerY; //테스트 페이지용 위치
+//윈도우 전체 페이지용 위치
+//   curX = (window.Event) ? 
+//   e.pageX : e.clientX + (document.documentElement.scrollLeft ? 
+//   document.documentElement.scrollLeft : document.body.scrollLeft);
+//    curY = (window.Event) ? e.pageY : e.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
+}
+
+canvas.onmousedown = function() {
+  pressed = true;
+};
+
+canvas.onmouseup = function() {
+  pressed = false;
+}
+
+clear_btn.onclick = function() {
+  ctx.fillStyle = 'rgb(0,0,0)';
+  ctx.fillRect(0,0,width,height);
+}
+
+function draw() {
+  if(pressed) {
+    ctx.fillStyle = color_picker.value;
+    ctx.beginPath();
+    ctx.arc(curX, curY, size_picker.value, degToRad(0), degToRad(360), false);
+    ctx.fill();
+  }
+
+  requestAnimationFrame(draw);
+}
+
+draw();
+</script>
+</body>
+</html>
