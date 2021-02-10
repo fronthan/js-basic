@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <title>requestAnimationFrame</title>
+    <link rel="stylesheet" href="../common.css">
+    <style>
+        * {box-sizing: border-box;}
+        html {height:100%; margin: 0; padding:0;}
+        h1 {margin: 0;}
+        body {height:inherit; margin: 0;}
+        .main_container {height: inherit; padding: 30px;}
+        .cont_area {height:calc(100% - 214px); font-size: 10rem; display: flex; justify-content: center; align-items: center;}
+    </style>
+
+  </head>
+  <body>
+      <div class="main_container">
+        <div class="tit_area">
+            <h1 class="tit">반복함수 requestAnimationFrame()+cancelAnimationFrame() 공부</h1>
+            <p class="tit_date">21.01.22</p>
+            <a class="study_page" href="https://developer.mozilla.org/ko/docs/Learn/JavaScript/Asynchronous/Timeouts_and_intervals#active_learning_starting_and_stopping_our_spinner">Web 개발 학습하기 > JavaScript - 동적인 클라이언트측 스크립트 언어 >  Asynchronous JavaScript > Cooperative asynchronous JavaScript: Timeouts and intervals > Active learning: Starting and stopping our spinner</a>
+            <span class="note_txt">* note : 문서 어느 곳이나 클릭하면 회전을 start, stop 할 수 있다.</span>
+        </div>
+
+        <div class="cont_area">
+            <div class="js-rotate">↻</div>
+        </div>
+      </div>
+
+      <script>
+    let rAF;
+
+    document.body.addEventListener('click', ()=> {
+        rAF == undefined ? draw() : cancelDraw();
+    });
+
+
+    const spinner = document.querySelector('.js-rotate');
+    let rotate_count = 0;
+    let start_time = null;
+
+    function draw(timestamp) {//회전 애니메이션
+        if ( !start_time ) {
+            start_time = timestamp;
+        }
+
+        rotate_count = (timestamp - start_time) / 3;
+
+        if ( rotate_count > 359) {
+            rotate_count %= 360;
+        }
+
+        spinner.style.transform = "rotate(" + rotate_count + "deg)";
+        
+        rAF = requestAnimationFrame(draw);
+    }
+
+    function cancelDraw() {//회전 애니메이션 취소하기
+        cancelAnimationFrame(rAF);
+        rAF = undefined;
+    }
+</script>    
+  </body>
+</html>

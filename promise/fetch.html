@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../common.css">
+    <title>fetch()</title>
+</head>
+<body>
+    <div class="main_container">
+        <div class="tit_area">
+            <h1 class="tit">비동기 프로그래밍 promise 공부</h1>
+            <p class="tit_date">21.01.22</p>
+            <a class="study_page" href="https://developer.mozilla.org/ko/docs/Learn/JavaScript/Asynchronous/Promises#explaining_basic_promise_syntax_a_real_example">Web 개발 학습하기 > JavaScript - 동적인 클라이언트측 스크립트 언어 >  Asynchronous JavaScript > Graceful asynchronous programming with Promises</a>
+            <span class="note_txt">* note : fetch(), blob(), createObjectURL()</span>
+        </div>
+
+        <div class="cont_area">
+
+
+        </div>
+      </div>
+<script>
+    let promise = fetch('coffee.jpg'); //pending 상태
+
+    let promise2 = promise.then(response => response.blob());
+
+    let promise3 = promise2.then(myBlob => {
+        let object_url = URL.createObjectURL(myBlob); //object가 가지고있는 URL 반환
+        let image = document.createElement('img');
+        image.src = object_url;
+        document.querySelector('.cont_area').appendChild(image);
+    });
+
+    let error_case = promise3.catch(e => {
+        console.log('fetch 에 오류가 발생 : ' +e.message);
+    })
+
+</script>
+</body>
+</html>

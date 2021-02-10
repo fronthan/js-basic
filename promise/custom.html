@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../common.css">
+    <title>Promise custom</title>
+</head>
+<body>
+    <div class="main_container">
+        <div class="tit_area">
+            <h1 class="tit">비동기 프로그래밍 promise 공부</h1>
+            <p class="tit_date">21.01.22</p>
+            <a class="study_page" href="https://developer.mozilla.org/ko/docs/Learn/JavaScript/Asynchronous/Promises#explaining_basic_promise_syntax_a_real_example">Web 개발 학습하기 > JavaScript - 동적인 클라이언트측 스크립트 언어 >  Asynchronous JavaScript > Graceful asynchronous programming with Promises</a>
+            <span class="note_txt">* note : custom - 사용자 정의 Promise (구식 비동기 API코드를 Promise 기반코드로 만들고싶을 때 사용한다.) </span>
+        </div>
+
+        <div class="cont_area">
+
+
+        </div>
+      </div>
+<script>
+    function timeoutPromise(message, interval) {
+        return new Promise((resolve, reject) => {
+            if (message === '' || typeof message !== 'string') {
+                reject('메세지가 비었거나 글자가 아님');
+            } else if (interval < 0 || typeof interval !== 'number') {
+                reject('인터벌이 음수이거나 숫자가 아님')
+            } else {
+                setTimeout(() => {
+                  resolve(message);
+                }, interval);
+            }
+      });
+    }
+
+    timeoutPromise('Hello there!', 1000)
+    .then(message => {
+        alert(message);
+    })
+    .catch(e=> {
+        console.log('error: ' + e);
+    });
+</script>
+</body>
+</html>
