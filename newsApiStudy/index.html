@@ -4,37 +4,54 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <title>Study</title>
 </head>
 <body>
   <div class="contents">
-
+    
   </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script>
-  
+  initNews();
   function initNews() {
-    const $box = $('.contents');
+    const box = document.querySelector('.contents');
+    
+    $.get("https://newsapi.org/v2/everything?domains=usnews.com&apiKey=493c839ebcce4b6ea34c39823af14a80&pageSize=1", function(res, status){
+      const data = res.articles;
+      
+      if (data) {
+        data.forEach(dt => {
+          const ttl = makeElement('h2', 'title', dt.title);
+          const image = makeElement('img', 'image', dt.urlToImage);
+          const desc = makeElement('div', 'desc', dt.description);
+          const content = makeElement('p', 'content', dt.content);
+          const date = makeElement('p', 'date', dt.publishedAt);
+          const link = makeElement('p', 'url', dt.url);
 
-    const url = "https://newsapi.org/v2/top-headlines?country=us&apiKey=493c839ebcce4b6ea34c39823af14a80";
-    $.ajax({
-      url:url,
-      type:"GET",
-      success: function(res) {
-        const data = res.articles;
-        
-        if (data) {
-          $box.html(data);
-        }
-       
-      }, error: function(err) {
-        console.log(error);
+          const el = document.createElement('section');
+          el.appendChild = ttl;
+          el.appendChild = image;
+          el.appendChild = desc;
+          el.appendChild = image;
+          el.appendChild = content;
+          el.appendChild = date;
+          el.appendChild = link;
+
+          box.appendChild = el;
+        });
+      }
+      if (status == 'error') {
+        box.textContent = "code : " + status.code + "&& message : " + status.message
       }
     });
+  }  
+
+  function makeElement(tag, cls, txt) {
+    const el = document.createElement(tag);
+    el.classList.add(cls);
+    el.textContent = txt;
   }
-  
-    
-  
 </script>
 </html>
