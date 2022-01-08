@@ -42,7 +42,10 @@
           box.appendChild = el;
         });
       }
-      if (status == 'error') {
+      if (status == "ok") {
+       box.appendChild(res); 
+      }
+      if (status == "error") {
         box.textContent = "code : " + status.code + "&& message : " + status.message
       }
     });
