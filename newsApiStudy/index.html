@@ -18,7 +18,7 @@
   function initNews() {
     const box = document.querySelector('.contents');
     
-    $.get("https://newsapi.org/v2/everything?domains=usnews.com&apiKey=493c839ebcce4b6ea34c39823af14a80&pageSize=1", function(res, status){
+    $.get("https://newsapi.org/v2/everything?domains=nytimes.com&apiKey=493c839ebcce4b6ea34c39823af14a80&pageSize=10", function(res, status){
       const data = res.articles;
       
       if (data) {
