@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Study</title>
+  <style>
+    .image {max-width:100%;}
+  </style>
 </head>
 <body>
   <div class="contents">
@@ -18,7 +21,11 @@
   function initNews() {
     const box = document.querySelector('.contents');
     
-    $.get("https://newsapi.org/v2/everything?domains=usnews.com&apiKey=493c839ebcce4b6ea34c39823af14a80&pageSize=1", function(res, status){
+    $.get("https://newsapi.org/v2/everything?domains=nytimes.com&apiKey=493c839ebcce4b6ea34c39823af14a80&pageSize=1", function(){
+      console.log('success');
+    })
+    .done(function(res){
+
       const data = res.articles;
       
       if (data) {
@@ -31,27 +38,35 @@
           const link = makeElement('p', 'url', dt.url);
 
           const el = document.createElement('section');
-          el.appendChild = ttl;
-          el.appendChild = image;
-          el.appendChild = desc;
-          el.appendChild = image;
-          el.appendChild = content;
-          el.appendChild = date;
-          el.appendChild = link;
+          el.appendChild(ttl);
+          el.appendChild(image);
+          el.appendChild(desc);
+          el.appendChild(content);
+          el.appendChild(date);
+          el.appendChild(link);
 
-          box.appendChild = el;
+          box.appendChild(el);
         });
       }
-      if (status == 'error') {
-        box.textContent = "code : " + status.code + "&& message : " + status.message
+      if (status == "ok") {
+       box.appendChild(res); 
       }
+    }).fail(function(){
+      box.textContent = "code : " + status.code + "&& message : " + status.message;
     });
   }  
 
   function makeElement(tag, cls, txt) {
     const el = document.createElement(tag);
     el.classList.add(cls);
-    el.textContent = txt;
+
+    if(cls == 'image') {
+      el.src = txt;
+    } else {
+      el.textContent = txt;
+    }
+
+    return el;
   }
 </script>
 </html>
